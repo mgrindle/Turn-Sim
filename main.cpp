@@ -23,7 +23,7 @@ using namespace std;
 int main()
 {
 
-    general_testing();
+    //general_testing();
 
 //***********************
 //
@@ -33,7 +33,7 @@ int main()
 
     // time looping variables
     int current_timestep;
-    int end_timestep = 1;
+    int end_timestep = 40;
 
     // wind variables
     bool use_wind = false;
@@ -65,7 +65,8 @@ int main()
         // handle each thermal's evolution for new timestep
         for (int i = 0; i < therm_cnt; ++i) {
             therms[i].evolve();
-            therms[i].prt_thermal();
+            if (current_timestep == 39)
+                therms[i].prt_thermal();
         }
 
 

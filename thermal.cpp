@@ -34,7 +34,7 @@ void XG_T_Profile::prt_t_profile(void) {    // print an entire thermal profile
         std::cout << "Idx " << i << " - ";
         centers[i].prt_point();
         std::cout << " ";
-        if (j == 4) {
+        if (j == 3) {
             std::cout << std::endl;
             j = 0;
         }
@@ -48,17 +48,24 @@ void XG_T_Profile::prt_t_profile(XG_T_Profile &t_profile) {    // print an entir
         std::cout << "Idx " << i << " - ";
         centers[i].prt_point();
         std::cout << " ";
-        if (j == 4) {
+        if (j == 3) {
             std::cout << std::endl;
             j = 0;
         }
     }
 }
 
-void XG_T_Profile::shift_phase_1(int ascent_rate, AP_Point &center) {    // @ 1st timestep, start loading t_profile
+void XG_T_Profile::shift_phase_1(const int ascent_rate, AP_Point &center) {    // @ 1st timestep, start loading t_profile
     for (int i = 0; i < ascent_rate; ++i) {
         centers[i] = center;
         centers[i].set_z(i + 1);
+    }
+}
+
+void XG_T_Profile::shift_phase_2(const int ascent_rate, AP_Point &center, const int top_idx) {    // 2nd phase, building t_profile - no wind impact
+    for (int i = top_idx; i >= ascent_rate; --i) {
+        centers[i] = center;
+        centers[i].set_z(centers[i - ascent_rate].get_z() + ascent_rate);
     }
 }
 
@@ -117,14 +124,20 @@ void XG_Thermal::evolve(void) {
 
         } else {
             // after the first timestep in thermal evolution
+            // continue during seconds 2-15
             if (_col_height_idx < (_ascent_rate * 14)) {
-                // handles creation during seconds 1-14
+                // handles additional building during seconds 1-14
                 // there is no wind impact during this phase
+                int top_idx = _col_height_idx + _ascent_rate;
+                _t_profile.XG_T_Profile::shift_phase_2(_ascent_rate, _base_point, top_idx);
+                _t_profile.XG_T_Profile::shift_phase_1(_ascent_rate, _base_point);
+                _col_height_idx += _ascent_rate;
 
             }
             else {
-                // handles final creation of the thermal profile
-                // during seconds 15-32. Wind effect top
+                // handles final creation phase of the thermal profile
+                // during seconds 15-32. Wind effects top
+
             }
         }
         // end branch for building a new thermal profile

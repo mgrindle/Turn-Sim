@@ -42,7 +42,8 @@ struct XG_T_Profile {
     ~XG_T_Profile();                // destructor
     void prt_t_profile(void);       // print an entire thermal profile
     void prt_t_profile(XG_T_Profile &); // print entire profile using address of a profile
-    void shift_phase_1(int ascent_rate, AP_Point &center);   // 1st timestep for building t_profile
+    void shift_phase_1(const int ascent_rate, AP_Point &center);  // 1st timestep for building t_profile
+    void shift_phase_2(const int ascent_rate, AP_Point &center, const int top_idx);  // 2nd phase - no wind impact
 };
 
 //****************************************
@@ -54,7 +55,7 @@ private:
     int _creation_timestep;
     int _diameter;
     AP_Point _base_point;
-    int _col_height_idx;
+    int _col_height_idx;        // highest row (index) populated during build
     int _ascent_rate;
     int _disburse_elev;
     XG_T_Profile _t_profile;
