@@ -4,7 +4,7 @@
  Author      : Mike Grindle
  Version     : v0.0.0
  Copyright   : GPLv3
- Description : Define class: thermal function definitions
+ Description : Define class: Thermal function definitions
  ============================================================================
  */
 
@@ -55,7 +55,7 @@ void XG_T_Profile::prt_t_profile(XG_T_Profile &t_profile) {    // print an entir
     }
 }
 
-void XG_T_Profile::initial_timestep(int ascent_rate, AP_Point &center) {    // 1st timestep for building t_profile
+void XG_T_Profile::shift_phase_1(int ascent_rate, AP_Point &center) {    // @ 1st timestep, start loading t_profile
     for (int i = 0; i < ascent_rate; ++i) {
         centers[i] = center;
         centers[i].set_z(i + 1);
@@ -112,7 +112,7 @@ void XG_Thermal::evolve(void) {
         // this branch is for building a new thermal profile
         if (_col_height_idx == 0) {
             // first timestep in thermal evolution
-            _t_profile.XG_T_Profile::initial_timestep(_ascent_rate, _base_point);
+            _t_profile.XG_T_Profile::shift_phase_1(_ascent_rate, _base_point);
             _col_height_idx = _ascent_rate - 1;
 
         } else {

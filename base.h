@@ -19,11 +19,8 @@
 
 class AP_Point {
 private:
-// TODO (ty#1#): Change all coordinates to float or double type
      int _x;    // meters (like longitude)
      int _y;    // meters (like latitude)
-// TODO (ty#1#): find .gitignore file for codeblock project
-// TODO (ty#1#): Change coordinate type to float or double
      int _z;    // elevation (meters AGL)
 public:
     AP_Point(int nx = 0, int ny = 0, int nz = 0) : _x(nx), _y(ny), _z(nz) {}

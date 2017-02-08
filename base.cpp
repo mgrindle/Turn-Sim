@@ -4,7 +4,7 @@
  Author      : Mike Grindle
  Version     : v0.0.0
  Copyright   : GPLv3
- Description : Define class: base function definitions
+ Description : Define class: Base function definitions
  ============================================================================
  */
 

@@ -7,7 +7,7 @@
  Author      : Mike Grindle
  Version     : v0.0.0
  Copyright   : GPLv3
- Description : For a thermal define all constants, classes and it's functions
+ Description : For a thermal, define all constants, classes and it's functions
  ============================================================================
  */
 #include "base.h"
@@ -30,6 +30,9 @@ const int THERMAL_DIA = 125;        // The standard diameter (meters) of a therm
 
 // End constant definitions
 
+//***************************************************
+// for struct type: XG_T_Profile
+//***************************************************
 
 struct XG_T_Profile {
     AP_Point * centers;
@@ -39,8 +42,12 @@ struct XG_T_Profile {
     ~XG_T_Profile();                // destructor
     void prt_t_profile(void);       // print an entire thermal profile
     void prt_t_profile(XG_T_Profile &); // print entire profile using address of a profile
-    void initial_timestep(int ascent_rate, AP_Point &center);   // 1st timestep for building t_profile
+    void shift_phase_1(int ascent_rate, AP_Point &center);   // 1st timestep for building t_profile
 };
+
+//****************************************
+// for class type: XG_Thermal
+//****************************************
 
 class XG_Thermal {
 private:
