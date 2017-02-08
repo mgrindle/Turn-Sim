@@ -2,7 +2,7 @@
  ============================================================================
  Name        : base.cpp
  Author      : Mike Grindle
- Version     : v0.0.0
+ Version     : v0.1.0
  Copyright   : GPLv3
  Description : Define class: Base function definitions
  ============================================================================

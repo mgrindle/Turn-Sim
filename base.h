@@ -5,7 +5,7 @@
  ============================================================================
  Name        : base.h
  Author      : Mike Grindle
- Version     : v0.0.0
+ Version     : v0.1.0
  Copyright   : GPLv3
  Description : Define all constants, classes and functions that do not
                 describe the classes: plane and thermal

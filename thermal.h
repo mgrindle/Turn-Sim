@@ -5,7 +5,7 @@
  ============================================================================
  Name        : thermal.h
  Author      : Mike Grindle
- Version     : v0.0.0
+ Version     : v0.2.0
  Copyright   : GPLv3
  Description : For a thermal, define all constants, classes and it's functions
  ============================================================================

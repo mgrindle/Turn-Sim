@@ -5,7 +5,7 @@
  ============================================================================
  Name        : wind.h
  Author      : Mike Grindle
- Version     : v0.0.0
+ Version     : v0.2.0
  Copyright   : GPLv3
  Description : For winds, define all constants, classes and it's functions.
                 Winds are not temporally based but are constant over the
@@ -35,6 +35,7 @@
 // 5. A wind area has a low elevation component and an upper
 //      elevation component. Delineated by an boundary elevation. The
 //      upper elevation component extends unlimited.
+// 6. Both the plane and thermals are impacted by the wind
 
 //****************************************
 // for struct type: XG_Wind_Element

@@ -2,7 +2,7 @@
  ============================================================================
  Name        : thermal.cpp
  Author      : Mike Grindle
- Version     : v0.0.0
+ Version     : v0.2.0
  Copyright   : GPLv3
  Description : Define class: Thermal function definitions
  ============================================================================
