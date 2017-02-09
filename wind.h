@@ -5,7 +5,7 @@
  ============================================================================
  Name        : wind.h
  Author      : Mike Grindle
- Version     : v0.2.0
+ Version     : v0.3.0
  Copyright   : GPLv3
  Description : For winds, define all constants, classes and it's functions.
                 Winds are not temporally based but are constant over the
@@ -38,16 +38,30 @@
 // 6. Both the plane and thermals are impacted by the wind
 
 //****************************************
+// for struct XG_P_Wind_Element
+//****************************************
+//      This is a public structure used
+//      as a return variable
+struct XG_P_Wind_Element {
+public:
+    int wind_dir;
+    int wind_s;
+};
+
+//****************************************
 // for struct type: XG_Wind_Element
 //****************************************
 struct XG_Wind_Element {
 private:
-    int _wind_dir;      // wind direction (azimuth degrees)
+    int _wind_dir;      // wind direction (azimuth degrees: 0-359)
     int _wind_s;        // wind speed (m/s)
 
 public:
-    XG_Wind_Element();
-    ~XG_Wind_Element();
+    XG_Wind_Element(int nwd = 0, int nws = 0) : _wind_dir(nwd), _wind_s(nws) {}
+    //~XG_Wind_Element();
+    void set_element(int wd, int ws);   // set member values
+    XG_P_Wind_Element get_element() const;    // get a wind element as returns a struct
+    void prt_wind_element();
 
 };
 
@@ -60,12 +74,14 @@ private:
     int _x_bounds[2];
     int _y_bounds[2];
     int _low_elev_bound;
-    int _w_area_grid[3] [3];
+    XG_Wind_Element _w_area_grid[3] [3] [2];
 
 public:
     XG_Wind();
-    ~XG_Wind();
-    void wind_case_a(XG_Wind &);    // For Case A, initialize XG_Wind values
+    //~XG_Wind();
+    void wind_case_a();    // For NO WINDs, initialize XG_Wind values
+    void wind_case_b();    // For light winds, initialize XG_Wind values
+    void prt_wind();
 };
 
 #endif // WIND_H_INCLUDED

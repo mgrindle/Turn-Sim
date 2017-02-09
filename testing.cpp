@@ -14,7 +14,8 @@
 
 using namespace std;
 
-void general_testing(void) {
+// General Testing of classes: AP_Point, XG_T_Profile and XG_Thermal
+void general_testing1(void) {
 
     //***********************
     // class: AP_Point
@@ -74,4 +75,10 @@ void general_testing(void) {
 
     // end testing class: XG_Thermal
 
+}
+
+// General Testing of Classes: XG_Wind_Element, XG_Wind
+void general_testing2(void) {
+    XG_Wind wind_a;
+    wind_a.prt_wind();
 }

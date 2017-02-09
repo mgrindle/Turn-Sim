@@ -111,8 +111,8 @@ void XG_Thermal::prt_thermal(void) {      // print members of the object
 }
 
 void XG_Thermal::evolve(void) {
-    if (_col_height_idx >= (_ascent_rate * 32)) {
-        // handles a fully formed thermal
+    if (_col_height_idx >= (_ascent_rate * FORMATION_DURATION)) {
+        // handles a fully formed thermal to reflect existing wind impacts
 
     }
     else {
@@ -123,10 +123,14 @@ void XG_Thermal::evolve(void) {
             _col_height_idx = _ascent_rate - 1;
 
         } else {
-            // after the first timestep in thermal evolution
-            // continue during seconds 2-15
-            if (_col_height_idx < (_ascent_rate * 14)) {
-                // handles additional building during seconds 1-14
+            // After the 'else', this code handles
+            // after the first timestep in thermal evolution process
+            // For the initial model - continue during timesteps 2-15
+            if (_col_height_idx < (_ascent_rate * FORMATION_SPLIT)) {
+
+                // after the first timestep in thermal evolution until
+                // the FORMATION_SPLIT time.
+                // For the initial model - continue during timesteps 2-15,
                 // there is no wind impact during this phase
                 int top_idx = _col_height_idx + _ascent_rate;
                 _t_profile.XG_T_Profile::shift_phase_2(_ascent_rate, _base_point, top_idx);
@@ -135,8 +139,9 @@ void XG_Thermal::evolve(void) {
 
             }
             else {
-                // handles final creation phase of the thermal profile
-                // during seconds 15-32. Wind effects top
+                // handles final creation phase of the thermal profile after
+                // the FORMATION_SPLIT time has passed.
+                // For the initial model, during timesteps 15-32. Wind effects top half
 
             }
         }

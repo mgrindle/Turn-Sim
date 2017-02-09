@@ -16,8 +16,8 @@
 
 const int TAR = 3;      // Thermal Ascent Rate - the rate that air rises in an
                         // active thermal. *** ALSO *** It defines how a thermal
-                        // 'grows' during the thermal formation phase of it's
-                        // creation. It is used a step size. It is also used to
+                        // 'grows' during the thermal formation phases of it's
+                        // creation. It is used as a step size. It is also used to
                         // calculate the size of the Profile matrix.
 
 const int FORMATION_DURATION = 32;  // The amount of time in seconds the thermal
@@ -25,6 +25,12 @@ const int FORMATION_DURATION = 32;  // The amount of time in seconds the thermal
                                     // determines large the thermal profile
                                     // structure matrix will be. See 'struct'
                                     // definition: XG_T_Profile.
+
+const int FORMATION_SPLIT = 14;     // The timestep during the thermal formation process
+                                    //  which causes a split in the thermal. After
+                                    // this timestep, the upper portion begins to be
+                                    // effected by the low elevation winds the exist
+                                    // the thermal's center location.
 
 const int THERMAL_DIA = 125;        // The standard diameter (meters) of a thermal column.
 

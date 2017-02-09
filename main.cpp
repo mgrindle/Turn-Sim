@@ -23,7 +23,8 @@ using namespace std;
 int main()
 {
 
-    //general_testing();
+    //general_testing1();       // AP_Point, XG_T_Profile and XG_Thermal
+    //general_testing2();         // XG_Wind_Element, XG_Wind
 
 //***********************
 //
@@ -37,6 +38,10 @@ int main()
 
     // wind variables
     bool use_wind = false;
+    XG_Wind wind_grid;
+    wind_grid.wind_case_b();
+
+    wind_grid.prt_wind();
 
     // thermal variables
     int therm_cnt = 3;
