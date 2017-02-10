@@ -37,17 +37,20 @@ void AP_Point::set_z(const int new_z) {
     _z = new_z;
 };
 
+// coordinates are output in meters
 void AP_Point::prt_point(void) {
-    std::cout << "AP_Point: (" << _x << ", " << _y << ", " << _z << ")";
+    std::cout << "AP_Point: (" << _x/100 << ", " << _y/100 << ", " << _z/100 << ")";
 }
 
 // Using pass by reference to a AP_Point, print a point
+// coordinates are output in meters
 void AP_Point::prt_point(AP_Point & p) {
-    std::cout << "AP_Point: (" << p._x << ", " << p._y << ", " << p._z << ")";
+    std::cout << "AP_Point: (" << p._x/100 << ", " << p._y/100 << ", " << p._z/100 << ")";
 }
 
 //// Using pass by pointer to a AP_Point, print a point
+//// coordinates are output in meters
 //void AP_Point::prt_point(AP_Point * p) {
-////    std::cout << "AP_Point: (" << *p.get_x() << ", " << *p._y << ", " << *p._z << ")";
+////    std::cout << "AP_Point: (" << *p.get_x()/100 << ", " << *p._y/100 << ", " << *p._z/100 << ")";
 //}
 

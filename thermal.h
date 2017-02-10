@@ -14,13 +14,13 @@
 
 // Define system wide constants
 
-const int TAR = 3;      // Thermal Ascent Rate - the rate that air rises in an
+const int TAR = 3;      // Thermal Ascent Rate (m/s)- the rate that air rises in an
                         // active thermal. *** ALSO *** It defines how a thermal
                         // 'grows' during the thermal formation phases of it's
                         // creation. It is used as a step size. It is also used to
                         // calculate the size of the Profile matrix.
 
-const int FORMATION_DURATION = 32;  // The amount of time in seconds the thermal
+const int FORMATION_DURATION = 32;  // The amount of timesteps in seconds the thermal
                                     // formation function is active. This parameter
                                     // determines large the thermal profile
                                     // structure matrix will be. See 'struct'
@@ -32,7 +32,7 @@ const int FORMATION_SPLIT = 14;     // The timestep during the thermal formation
                                     // effected by the low elevation winds the exist
                                     // the thermal's center location.
 
-const int THERMAL_DIA = 125;        // The standard diameter (meters) of a thermal column.
+const int THERMAL_DIA = 12500;        // The standard diameter (centimeters) of a thermal column.
 
 // End constant definitions
 
@@ -42,7 +42,7 @@ const int THERMAL_DIA = 125;        // The standard diameter (meters) of a therm
 
 struct XG_T_Profile {
     AP_Point * centers;
-    int height = FORMATION_DURATION * TAR;
+    int height = FORMATION_DURATION * TAR;     // in meters
 
     XG_T_Profile();                 // constructor
     ~XG_T_Profile();                // destructor
@@ -59,11 +59,11 @@ struct XG_T_Profile {
 class XG_Thermal {
 private:
     int _creation_timestep;
-    int _diameter;
-    AP_Point _base_point;
+    int _diameter;              // in centimeters
+    AP_Point _base_point;       // in centimeters
     int _col_height_idx;        // highest row (index) populated during build
-    int _ascent_rate;
-    int _disburse_elev;
+    int _ascent_rate;           // in m/s
+    int _disburse_elev;         // in centimeters
     XG_T_Profile _t_profile;
 public:
     XG_Thermal(const int timestep, const int diameter,    // constructor

@@ -58,14 +58,14 @@ void XG_T_Profile::prt_t_profile(XG_T_Profile &t_profile) {    // print an entir
 void XG_T_Profile::shift_phase_1(const int ascent_rate, AP_Point &center) {    // @ 1st timestep, start loading t_profile
     for (int i = 0; i < ascent_rate; ++i) {
         centers[i] = center;
-        centers[i].set_z(i + 1);
+        centers[i].set_z((i + 1) * 100);     // z (elevation) units - centimeters
     }
 }
 
 void XG_T_Profile::shift_phase_2(const int ascent_rate, AP_Point &center, const int top_idx) {    // 2nd phase, building t_profile - no wind impact
     for (int i = top_idx; i >= ascent_rate; --i) {
         centers[i] = center;
-        centers[i].set_z(centers[i - ascent_rate].get_z() + ascent_rate);
+        centers[i].set_z(centers[i - ascent_rate].get_z() + (ascent_rate * 100));   // z (elevation) units - centimeters
     }
 }
 
@@ -78,32 +78,33 @@ XG_Thermal::XG_Thermal(const int timestep, const int diameter,    // constructor
                         const AP_Point &base, const int ascent_rate,
                         const int disperse_elev) {
     _creation_timestep = timestep;
-    _diameter = diameter;
+    _diameter = diameter;           // in centimeters
     // copy AP_Point base coordinates to class member
-    int coord = base.get_x();
+    int coord = base.get_x();       // already in centimeters
     _base_point.set_x(coord);
-    coord = base.get_y();
+    coord = base.get_y();           // already in centimeters
     _base_point.set_y(coord);
-    coord = base.get_z();
+    coord = base.get_z();           // already in centimeters
     _base_point.set_z(coord);
 
     _col_height_idx = 0;
     _ascent_rate = TAR;
-    _disburse_elev = disperse_elev;
+    _disburse_elev = disperse_elev * 100;   // convert to centimeters
     XG_T_Profile _t_profile;
 }
 
 void XG_Thermal::prt_thermal(void) {      // print members of the object
+    // Note: conversions from centimeters to meters
     std::cout << "*** XG_Thermal Object Display ***" << "\n\n";
     std::cout << "Creation timestep: " << _creation_timestep << " , " <<
-                "Diameter: " << _diameter << " , " <<
-                "Base Location: Point (" << _base_point.AP_Point::get_x() << ", " <<
-                                            _base_point.AP_Point::get_y() << ", " <<
-                                            _base_point.AP_Point::get_z() << "), " <<
+                "Diameter: " << _diameter / 100 << " , " <<
+                "Base Location: Point (" << _base_point.AP_Point::get_x() / 100 << ", " <<
+                                            _base_point.AP_Point::get_y() / 100 << ", " <<
+                                            _base_point.AP_Point::get_z() / 100 << "), " <<
                 std::endl <<
                 "Column Height Idx: " << _col_height_idx << " , " <<
                 "Ascent Rate: " << _ascent_rate << " , " <<
-                "Disbursing Elevation: " << _disburse_elev <<
+                "Disbursing Elevation: " << _disburse_elev / 100 <<
                 std::endl << std::endl;
     //XG_T_Profile::prt_t_profile(_t_profile);
     _t_profile.XG_T_Profile::prt_t_profile();

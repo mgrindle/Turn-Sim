@@ -30,6 +30,13 @@ int main()
 //
 //      Initialize loop variables
 //
+//      NOTE: Distances, coordinates, elevations are specified in meters
+//              but are converted and stored/used in centimeters.
+//                                    ^^^^^^^^^^^
+//            Plane and wind speeds are specified in meters/second
+//              but are converted and stored/used in centimeters/second.
+//                                    ^^^^^^^^^^^
+//
 //***********************
 
     // time looping variables

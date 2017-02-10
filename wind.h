@@ -37,6 +37,7 @@
 //      upper elevation component extends unlimited.
 // 6. Both the plane and thermals are impacted by the wind
 
+
 //****************************************
 // for struct XG_P_Wind_Element
 //****************************************
@@ -44,8 +45,8 @@
 //      as a return variable
 struct XG_P_Wind_Element {
 public:
-    int wind_dir;
-    int wind_s;
+    int wind_dir;       // wind direction (azimuth degrees: 0-359)
+    int wind_s;         // wind speed (cm/s)
 };
 
 //****************************************
@@ -54,10 +55,11 @@ public:
 struct XG_Wind_Element {
 private:
     int _wind_dir;      // wind direction (azimuth degrees: 0-359)
-    int _wind_s;        // wind speed (m/s)
+    int _wind_s;        // wind speed (cm/s)
 
 public:
-    XG_Wind_Element(int nwd = 0, int nws = 0) : _wind_dir(nwd), _wind_s(nws) {}
+    // wind_s entered as m/s then converted/stored as cm/s
+    XG_Wind_Element(int nwd = 0, int nws = 0) : _wind_dir(nwd), _wind_s(nws * 100) {}
     //~XG_Wind_Element();
     void set_element(int wd, int ws);   // set member values
     XG_P_Wind_Element get_element() const;    // get a wind element as returns a struct
@@ -71,9 +73,9 @@ public:
 //****************************************
 class XG_Wind {
 private:
-    int _x_bounds[2];
-    int _y_bounds[2];
-    int _low_elev_bound;
+    int _x_bounds[2];       // in centimeters
+    int _y_bounds[2];       // in centimeters
+    int _low_elev_bound;    // in centimeters
     XG_Wind_Element _w_area_grid[3] [3] [2];
 
 public:
