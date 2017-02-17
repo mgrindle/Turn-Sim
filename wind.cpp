@@ -26,6 +26,14 @@ XG_P_Wind_Element XG_Wind_Element::get_element() const {    // get a wind elemen
     return pwe;
 }
 
+int XG_Wind_Element::wind_dir_recip() {     // calc reciprocal of _wind_dir - the force direction
+    if (_wind_dir > 179) {                  // values: 0-359
+        return _wind_dir - 180;
+    } else {
+        return _wind_dir + 180;
+    }
+}
+
 void XG_Wind_Element::prt_wind_element() {
     // convert wind_s from cm/s to m/s
     std::cout << "WE: (" << _wind_dir << ", " << _wind_s / 100  << ")";

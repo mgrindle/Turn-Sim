@@ -66,6 +66,7 @@ public:
     //~XG_Wind_Element();
     void set_element(int wd, int ws);   // set member values
     XG_P_Wind_Element get_element() const;    // get a wind element as returns a struct
+    int wind_dir_recip();               // calc reciprocal of _wind_dir - the force direction
     void prt_wind_element();
 
 };
