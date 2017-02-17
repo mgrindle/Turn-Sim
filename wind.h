@@ -36,6 +36,9 @@
 //      elevation component. Delineated by an boundary elevation. The
 //      upper elevation component extends unlimited.
 // 6. Both the plane and thermals are impacted by the wind
+// 7. A XG_Wind object will be passed by reference as a const to other
+//      class objects, eg: XG_Thermal and XG_Glider, to be used to modify
+//      positions.
 
 
 //****************************************

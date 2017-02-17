@@ -66,6 +66,7 @@ private:
     int _disburse_elev;         // in centimeters
     XG_T_Profile _t_profile;
 public:
+// TODO (ty#1#): Add passing address to Class XG_Wind object in XG_Thermal constructor
     XG_Thermal(const int timestep, const int diameter,    // constructor
                 const AP_Point &base, const int ascent_rate,
                 const int disperse_elev);

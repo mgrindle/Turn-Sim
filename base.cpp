@@ -54,3 +54,29 @@ void AP_Point::prt_point(AP_Point & p) {
 ////    std::cout << "AP_Point: (" << *p.get_x()/100 << ", " << *p._y/100 << ", " << *p._z/100 << ")";
 //}
 
+
+// For AP_Speed_Vec class
+
+int AP_Speed_Vec::get_dir() const {
+    return _dir;
+}
+
+int AP_Speed_Vec::get_speed() const {
+    return _speed;
+}
+
+void AP_Speed_Vec::set_dir(const int new_dir) {
+    _dir = new_dir;
+}
+
+void AP_Speed_Vec::set_speed(const int new_speed) {
+    _speed = new_speed;       // new_speed parameter must be cm/s
+}
+
+void AP_Speed_Vec::prt_spd_vec(void) {             // output speed vec
+    std::cout << "AP_Speed_Vec: (" << _dir << "deg., " << _speed << "cm/s)";
+}
+
+void AP_Speed_Vec::prt_spd_vec(AP_Speed_Vec & sv) {   // output speed vec - pass by ref
+    std::cout << "AP_Speed_Vec: (" << sv._dir << "deg., " << sv._speed << "cm/s)";
+}
