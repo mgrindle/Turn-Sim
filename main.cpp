@@ -9,6 +9,8 @@
                Test various soaring methods to find and keep the glider
                circling within the rising thermal boundary. Also, waypoint
                flight path planning and altitude management strategy.
+1.
+2.
  ============================================================================
  */
 
