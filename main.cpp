@@ -63,9 +63,9 @@ int main()
     AP_Point t_base_3(10500, 11700, 0);
 
     XG_Thermal therms[] = {
-        {begin_step, THERMAL_DIA, t_base_1, TAR, 2500, wind_grid},
-        {begin_step, THERMAL_DIA, t_base_2, TAR, 1500, wind_grid},
-        {begin_step, THERMAL_DIA, t_base_3, TAR, 4000, wind_grid},
+        {begin_step, THERMAL_DIA, t_base_1, TAR, 2500, use_wind, wind_grid},
+        {begin_step, THERMAL_DIA, t_base_2, TAR, 1500, use_wind, wind_grid},
+        {begin_step, THERMAL_DIA, t_base_3, TAR, 4000, use_wind, wind_grid},
     };
 
     //therms[0].prt_thermal();

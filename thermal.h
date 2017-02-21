@@ -66,12 +66,14 @@ private:
     int _ascent_rate;           // in m/s
     int _disburse_elev;         // in centimeters
     XG_T_Profile _t_profile;
+    bool _use_wind;
     const XG_Wind & _ref_wind_grid;     // pass in the class object for changing locations
 public:
 // TODO (ty#1#): Add passing address to Class XG_Wind object in XG_Thermal constructor
     XG_Thermal(const int timestep, const int diameter,    // constructor
                 const AP_Point &base, const int ascent_rate,
                 const int disperse_elev,
+                const bool use_wind,
                 const XG_Wind &wind);
     void prt_thermal(void);             // print all members of the object
     void evolve(void);                  // thermal evolution over time

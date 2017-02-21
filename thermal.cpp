@@ -77,6 +77,7 @@ void XG_T_Profile::shift_phase_2(const int ascent_rate, AP_Point &center, const 
 XG_Thermal::XG_Thermal(const int timestep, const int diameter,    // constructor
                         const AP_Point &base, const int ascent_rate,
                         const int disperse_elev,
+                        const bool use_wind,
                         const XG_Wind &wind) : _ref_wind_grid(wind) {
     _creation_timestep = timestep;
     _diameter = diameter;           // in centimeters
@@ -92,6 +93,7 @@ XG_Thermal::XG_Thermal(const int timestep, const int diameter,    // constructor
     _ascent_rate = TAR;
     _disburse_elev = disperse_elev * 100;   // convert to centimeters
     XG_T_Profile _t_profile;
+    _use_wind = use_wind;
 }
 
 void XG_Thermal::prt_thermal(void) {      // print members of the object

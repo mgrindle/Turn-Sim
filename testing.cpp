@@ -58,24 +58,26 @@ void general_testing1(void) {
     //**********************************
 
     // need XG_Wind object for thermal class
+    bool test_use_wind = false;
     XG_Wind test_wind_grid;
     test_wind_grid.wind_case_b();
 
     // app variables needed for this class
-    int timestep = 0;
+    int test_timestep = 0;
 
-    XG_Thermal therm1 = {timestep, THERMAL_DIA,
+    XG_Thermal test_therm1 = {test_timestep, THERMAL_DIA,
                 p2, TAR,
-                2500, test_wind_grid};
-    therm1.prt_thermal();
+                2500,
+                test_use_wind, test_wind_grid};
+    test_therm1.prt_thermal();
 
 
-    XG_Thermal therm_arr_1[] = {
-        {timestep, THERMAL_DIA, p2, TAR, 2500, test_wind_grid},
-        {timestep, THERMAL_DIA, p3, TAR, 1500, test_wind_grid}
+    XG_Thermal test_therm_arr_1[] = {
+        {test_timestep, THERMAL_DIA, p2, TAR, 2500, test_use_wind, test_wind_grid},
+        {test_timestep, THERMAL_DIA, p3, TAR, 1500, test_use_wind, test_wind_grid}
     };
 
-    therm_arr_1[1].prt_thermal();
+    test_therm_arr_1[1].prt_thermal();
 
     // end testing class: XG_Thermal
 
