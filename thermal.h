@@ -51,6 +51,7 @@ struct XG_T_Profile {
     void prt_t_profile(XG_T_Profile &); // print entire profile using address of a profile
     void shift_phase_1(const int ascent_rate, AP_Point &center);  // 1st timestep for building t_profile
     void shift_phase_2(const int ascent_rate, AP_Point &center, const int top_idx);  // 2nd phase - no wind impact
+    void shift_phase_3(const int ascent_rate, const int top_idx, const XG_Wind & ref_wind_grid);  // 3rd phase - wind impact on top segments
 };
 
 //****************************************
