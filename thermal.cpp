@@ -76,7 +76,8 @@ void XG_T_Profile::shift_phase_2(const int ascent_rate, AP_Point &center, const 
 
 XG_Thermal::XG_Thermal(const int timestep, const int diameter,    // constructor
                         const AP_Point &base, const int ascent_rate,
-                        const int disperse_elev) {
+                        const int disperse_elev,
+                        const XG_Wind &wind) : _ref_wind_grid(wind) {
     _creation_timestep = timestep;
     _diameter = diameter;           // in centimeters
     // copy AP_Point base coordinates to class member
