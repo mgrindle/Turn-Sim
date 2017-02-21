@@ -69,7 +69,6 @@ private:
     bool _use_wind;
     const XG_Wind & _ref_wind_grid;     // pass in the class object for changing locations
 public:
-// TODO (ty#1#): Add passing address to Class XG_Wind object in XG_Thermal constructor
     XG_Thermal(const int timestep, const int diameter,    // constructor
                 const AP_Point &base, const int ascent_rate,
                 const int disperse_elev,

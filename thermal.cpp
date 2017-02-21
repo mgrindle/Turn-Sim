@@ -18,9 +18,9 @@
 XG_T_Profile::XG_T_Profile() {              // constructor
     // an XG_T_Profile struct has a fixed number of rows
     // based on the values of TAR and FORMATION_DURATION
-    int rows = TAR * FORMATION_DURATION;
+    int rows = TAR * FORMATION_DURATION;    // total rows of profile
     height = rows;
-    centers = new AP_Point[rows];
+    centers = new AP_Point[rows];           // location of segment center
 }
 
 XG_T_Profile::~XG_T_Profile() {             // destructor
@@ -107,7 +107,8 @@ void XG_Thermal::prt_thermal(void) {      // print members of the object
                 std::endl <<
                 "Column Height Idx: " << _col_height_idx << " , " <<
                 "Ascent Rate: " << _ascent_rate << " , " <<
-                "Disbursing Elevation: " << _disburse_elev / 100 <<
+                "Disbursing Elevation: " << _disburse_elev / 100 << ", " <<
+                "Use Wind for location change: " << std::boolalpha << _use_wind <<
                 std::endl << std::endl;
     //XG_T_Profile::prt_t_profile(_t_profile);
     _t_profile.XG_T_Profile::prt_t_profile();
