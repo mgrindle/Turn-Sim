@@ -69,8 +69,17 @@ void XG_T_Profile::shift_phase_2(const int ascent_rate, AP_Point &center, const 
     }
 }
 
-void XG_T_Profile::shift_phase_3(const int ascent_rate, const int top_idx, const XG_Wind & ref_wind_grid) {   // 3rd phase - wind impact on top segments
+void XG_T_Profile::shift_phase_3(const int ascent_rate, const int top_idx,
+                                 const bool use_wind, const XG_Wind & ref_wind_grid) {   // 3rd phase - wind impact on top segments
+    for (int i = top_idx; i >= (ascent_rate * FORMATION_SPLIT); --i) {
+        // Calc new center position if using wind grid in simulation run.  New position
+        //    based on local wind data and location of segment center at start of a cycle.
+        if (use_wind){
 
+        } else {
+
+        }
+    }
 }
 
 //****************************************
@@ -152,9 +161,9 @@ void XG_Thermal::evolve(void) {
                 // the FORMATION_SPLIT time has passed.
                 // For the initial model, during timesteps 15-32. Wind effects top half
                 int top_idx = _col_height_idx + _ascent_rate;
-                _t_profile.XG_T_Profile::shift_phase_3(_ascent_rate, top_idx, _ref_wind_grid);
+                _t_profile.XG_T_Profile::shift_phase_3(_ascent_rate, top_idx, _use_wind, _ref_wind_grid);
 
-                top_idx = _ascent_rate * FORMATION_SPLIT;
+                top_idx = _ascent_rate * FORMATION_SPLIT - 1;
                 _t_profile.XG_T_Profile::shift_phase_2(_ascent_rate, _base_point, top_idx);
 
                 _t_profile.XG_T_Profile::shift_phase_1(_ascent_rate, _base_point);
