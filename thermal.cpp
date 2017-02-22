@@ -74,11 +74,12 @@ void XG_T_Profile::shift_phase_3(const int ascent_rate, const int top_idx,
     for (int i = top_idx; i >= (ascent_rate * FORMATION_SPLIT); --i) {
         // Calc new center position if using wind grid in simulation run.  New position
         //    based on local wind data and location of segment center at start of a cycle.
-        if (use_wind){
+        if (use_wind) {
 
         } else {
 
         }
+        centers[i].set_z(centers[i - ascent_rate].get_z() + (ascent_rate * 100));   // z (elevation) units - centimeters
     }
 }
 
