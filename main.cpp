@@ -14,6 +14,29 @@
                and column height) but are constantly rising and moving location
                (based on local wind condition).
 
+               **************************************************************************
+               Units of Measure:
+                    - Distances, coordinates, elevations are specified/entered in meters
+                        but are converted and stored/used in centimeters.
+                                              ^^^^^^^^^^^
+                    - Times are specified in seconds but are converted to
+                        and stored/used in deciseconds (1/10 second).
+                            ^^^^^^^^^^^
+
+                    - Timesteps are always in deciseconds (1/10 second).
+
+                    - Plane and wind speeds are specified/entered in meters/second
+                        but are converted and stored/used in centimeters/decisecond.
+                                              ^^^^^^^^^^^
+
+                                Entered     Stored/Used
+                    Time:       1 sec           10 ds
+                    Timestep:   1 ds            1 ds
+                    Distance:   1 m             100 cm
+                    Speed:      1 m/s           10 cm/ds
+
+                **************************************************************************
+
  ============================================================================
  */
 
@@ -31,18 +54,13 @@ int main()
     //general_testing1();       // AP_Point, XG_T_Profile and XG_Thermal
     //general_testing2();         // XG_Wind_Element, XG_Wind
 
-//***********************
+//**************************************************
 //
 //      Initialize loop variables
 //
-//      NOTE: Distances, coordinates, elevations are specified in meters
-//              but are converted and stored/used in centimeters.
-//                                    ^^^^^^^^^^^
-//            Plane and wind speeds are specified in meters/second
-//              but are converted and stored/used in centimeters/second.
-//                                    ^^^^^^^^^^^
+//      See Notes above about Units of Measure
 //
-//***********************
+//**************************************************
 
     // time looping variables
     int current_timestep;
