@@ -66,11 +66,11 @@ int main()
 
     // time looping variables
     int current_timestep;
-    int timestep_incr = 2;  // 1/5sec. = 2ds
+    int timestep_incr = THERMAL_SEG_TIMESTEPS;
     int end_timestep = 400;
 
     // wind variables
-    bool use_wind = false;
+    bool use_wind = false;  // use wind data in the simulation
     XG_Wind wind_grid;
     wind_grid.wind_case_b();
 
@@ -106,7 +106,7 @@ int main()
 
     for (current_timestep = 0; current_timestep < end_timestep; current_timestep += timestep_incr) {
 
-        if (current_timestep < 320 && timestep_incr != 2) {
+        if (current_timestep < FORMATION_DURATION && timestep_incr != THERMAL_SEG_TIMESTEPS) {
             cout << "******************************************************************\n";
             cout << "*                                                                *\n";
             cout << "*   ABORT EXECUTION - Timestep increment not = 2 during          *\n";

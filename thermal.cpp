@@ -17,8 +17,8 @@
 
 XG_T_Profile::XG_T_Profile() {              // constructor
     // an XG_T_Profile struct has a fixed number of rows
-    // based on the values of TAR and FORMATION_DURATION
-    int rows = TAR * FORMATION_DURATION;    // total rows of profile
+    // based on the values of FORMATION_DURATION & THERMAL_SEG_TIMESTEPS
+    int rows = FORMATION_DURATION / THERMAL_SEG_TIMESTEPS;    // total rows of profile
     height = rows;
     centers = new AP_Point[rows];           // location of segment center
 }

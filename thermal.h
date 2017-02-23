@@ -15,25 +15,33 @@
 
 // Define system wide constants
 
-const int TAR = 3;      // Thermal Ascent Rate (m/s)- the rate that air rises in an
-                        // active thermal. *** ALSO *** It defines how a thermal
-                        // 'grows' during the thermal formation phases of it's
-                        // creation. It is used as a step size. It is also used to
-                        // calculate the size of the Profile matrix.
+const int TAR = 30;                 // Thermal Ascent Rate (cm/ds)- the rate that
+                                    // air rises in an active thermal.
+                                    // *** ALSO *** It defines how a thermal
+                                    // 'grows' during the thermal formation phases
+                                    // of it's creation.
 
-const int FORMATION_DURATION = 32;  // The amount of timesteps in seconds the thermal
-                                    // formation function is active. This parameter
-                                    // determines large the thermal profile
-                                    // structure matrix will be. See 'struct'
-                                    // definition: XG_T_Profile.
+const int FORMATION_DURATION = 320; // The amount of timesteps in deciseconds the
+                                    // thermal formation function is active. This
+                                    // parameter also helps determine how large
+                                    // the thermal profile structure matrix will be.
+                                    // See 'struct' definition: XG_T_Profile.
 
-const int FORMATION_SPLIT = 14;     // The timestep during the thermal formation process
+const int THERMAL_SEG_TIMESTEPS = 2;// The timestep increment value that should be used
+                                    // during the thermal formation phase. A new
+                                    // thermal profile structure segment/row is
+                                    // added/populated at each increment. This
+                                    // parameter also helps determine how large
+                                    // the thermal profile structure matrix will be.
+                                    // See 'struct' definition: XG_T_Profile.
+
+const int FORMATION_SPLIT = 160;    // The timestep during the thermal formation process
                                     //  which causes a split in the thermal. After
                                     // this timestep, the upper portion begins to be
-                                    // effected by the low elevation winds the exist
-                                    // the thermal's center location.
+                                    // effected by the low elevation winds that exist
+                                    // at the thermal's center location.
 
-const int THERMAL_DIA = 12500;        // The standard diameter (centimeters) of a thermal column.
+const int THERMAL_DIA = 12500;      // The standard diameter (centimeters) of a thermal column.
 
 // End constant definitions
 
@@ -43,7 +51,8 @@ const int THERMAL_DIA = 12500;        // The standard diameter (centimeters) of 
 
 struct XG_T_Profile {
     AP_Point * centers;
-    int height = FORMATION_DURATION * TAR;     // in meters
+    //int height = FORMATION_DURATION / THERMAL_SEG_TIMESTEPS;     // # of centers or rows
+    int height;         // # of centers or rows
 
     XG_T_Profile();                 // constructor
     ~XG_T_Profile();                // destructor
