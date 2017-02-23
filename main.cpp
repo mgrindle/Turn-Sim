@@ -14,6 +14,8 @@
                and column height) but are constantly rising and moving location
                (based on local wind condition).
 
+               As a methodology, I am attempting to use all integer math.
+
                **************************************************************************
                Units of Measure:
                     - Distances, coordinates, elevations are specified/entered in meters
@@ -64,7 +66,8 @@ int main()
 
     // time looping variables
     int current_timestep;
-    int end_timestep = 40;
+    int timestep_incr = 2;  // 1/5sec. = 2ds
+    int end_timestep = 400;
 
     // wind variables
     bool use_wind = false;
@@ -74,7 +77,9 @@ int main()
     wind_grid.prt_wind();
 
     // thermal variables
-    int therm_cnt = 3;
+    //
+    // need timestep_incr = 2 for building initial thermals
+    int therm_cnt = 3;      // number of thermals to create
     int begin_step = 0;
     AP_Point t_base_1(10200, 10200, 0);
     AP_Point t_base_2(10700, 10700, 0);
@@ -90,20 +95,37 @@ int main()
     //therms[1].prt_thermal();
     //therms[2].prt_thermal();
 
+    // plane variables
+    bool p_in_thermal_mode = false;     // Is the plane set in thermaling mode?
+
 //****************************************************************************
 //
 //      Begin Time Loop
 //
 //****************************************************************************
 
-    for (current_timestep = 0; current_timestep < end_timestep; ++current_timestep) {
+    for (current_timestep = 0; current_timestep < end_timestep; current_timestep += timestep_incr) {
+
+        if (current_timestep < 320 && timestep_incr != 2) {
+            cout << "******************************************************************\n";
+            cout << "*                                                                *\n";
+            cout << "*   ABORT EXECUTION - Timestep increment not = 2 during          *\n";
+            cout << "*                     the creation of thermal columns.           *\n";
+            cout << "*                                                                *\n";
+            cout << "*                     Plane may have encountered a thermal       *\n";
+            cout << "*                     before thermal creation was complete.      *\n";
+            cout << "*                                                                *\n";
+            cout << "******************************************************************\n";
+            return 10;
+        }
+/*
         // handle each thermal's evolution for new timestep
         for (int i = 0; i < therm_cnt; ++i) {
             therms[i].evolve();
             if (current_timestep == 39)
                 therms[i].prt_thermal();
         }
-
+*/
 
     }
 
