@@ -30,11 +30,13 @@ XG_T_Profile::~XG_T_Profile() {             // destructor
 void XG_T_Profile::prt_t_profile(void) {    // print an entire thermal profile
     std::cout << "Thermal Profile:" << std::endl;
     int i,j;
+    int col_cnt = 10 / THERMAL_SEG_TIMESTEPS;
+
     for (i = 0, j = 1; i < height; ++i, ++j) {
         std::cout << "Idx " << i << " - ";
         centers[i].prt_point();
         std::cout << " ";
-        if (j == 3) {
+        if (j == col_cnt) {
             std::cout << std::endl;
             j = 0;
         }
@@ -44,11 +46,13 @@ void XG_T_Profile::prt_t_profile(void) {    // print an entire thermal profile
 void XG_T_Profile::prt_t_profile(XG_T_Profile &t_profile) {    // print an entire thermal profile
     std::cout << "Thermal Profile:" << std::endl;
     int i,j;
+    int col_cnt = 10 / THERMAL_SEG_TIMESTEPS;
+
     for (i = 0, j = 1; i < height; ++i, ++j) {
         std::cout << "Idx " << i << " - ";
         centers[i].prt_point();
         std::cout << " ";
-        if (j == 3) {
+        if (j == col_cnt) {
             std::cout << std::endl;
             j = 0;
         }
