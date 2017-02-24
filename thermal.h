@@ -74,7 +74,7 @@ private:
     int _diameter;              // in centimeters
     AP_Point _base_point;       // in centimeters
     int _col_height_idx;        // highest row (index) populated during build
-    int _ascent_rate;           // in m/s
+    int _ascent_rate;           // in cm/ds
     int _disburse_elev;         // in centimeters
     XG_T_Profile _t_profile;
     bool _use_wind;

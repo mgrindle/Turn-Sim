@@ -107,24 +107,24 @@ XG_Thermal::XG_Thermal(const int timestep, const int diameter,    // constructor
     _base_point.set_z(coord);
 
     _col_height_idx = 0;
-    _ascent_rate = TAR;
+    _ascent_rate = TAR;             //already in cm/ds
     _disburse_elev = disperse_elev * 100;   // convert to centimeters
     XG_T_Profile _t_profile;
     _use_wind = use_wind;
 }
 
 void XG_Thermal::prt_thermal(void) {      // print members of the object
-    // Note: conversions from centimeters to meters
+    // Note: conversions from centimeters to meters, decisecons to seconds
     std::cout << "*** XG_Thermal Object Display ***" << "\n\n";
     std::cout << "Creation timestep: " << _creation_timestep << " , " <<
-                "Diameter: " << _diameter / 100 << " , " <<
-                "Base Location: Point (" << _base_point.AP_Point::get_x() / 100 << ", " <<
-                                            _base_point.AP_Point::get_y() / 100 << ", " <<
-                                            _base_point.AP_Point::get_z() / 100 << "), " <<
+                "Diameter: " << _diameter / 100 << " m, " <<
+                "Base Location: Point (" << _base_point.AP_Point::get_x() / 100 << " m, " <<
+                                            _base_point.AP_Point::get_y() / 100 << " m, " <<
+                                            _base_point.AP_Point::get_z() / 100 << " m), " <<
                 std::endl <<
                 "Column Height Idx: " << _col_height_idx << " , " <<
-                "Ascent Rate: " << _ascent_rate << " , " <<
-                "Disbursing Elevation: " << _disburse_elev / 100 << ", " <<
+                "Ascent Rate: " << _ascent_rate / 10 << " m/s, " <<
+                "Disbursing Elevation: " << _disburse_elev / 100 << " m, " <<
                 "Use Wind for location change: " << std::boolalpha << _use_wind <<
                 std::endl << std::endl;
     //XG_T_Profile::prt_t_profile(_t_profile);
