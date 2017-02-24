@@ -70,13 +70,13 @@ void AP_Speed_Vec::set_dir(const int new_dir) {
 }
 
 void AP_Speed_Vec::set_speed(const int new_speed) {
-    _speed = new_speed;       // new_speed parameter must be cm/s
+    _speed = new_speed;       // new_speed parameter must be cm/ds
 }
 
 void AP_Speed_Vec::prt_spd_vec(void) {             // output speed vec
-    std::cout << "AP_Speed_Vec: (" << _dir << "deg., " << _speed << "cm/s)";
+    std::cout << "AP_Speed_Vec: (" << _dir << "deg., " << _speed << "cm/ds)";
 }
 
 void AP_Speed_Vec::prt_spd_vec(AP_Speed_Vec & sv) {   // output speed vec - pass by ref
-    std::cout << "AP_Speed_Vec: (" << sv._dir << "deg., " << sv._speed << "cm/s)";
+    std::cout << "AP_Speed_Vec: (" << sv._dir << "deg., " << sv._speed << "cm/ds)";
 }

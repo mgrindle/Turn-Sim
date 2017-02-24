@@ -43,7 +43,7 @@ public:
 class AP_Speed_Vec {
 private:
     int _dir;      // direction of motion (azimuth degrees: 0-359)
-    int _speed;    // speed (cm/s)
+    int _speed;    // speed (cm/ds)
 public:
     // constructor
     AP_Speed_Vec(int ndir = 0, int nspeed = 0) : _dir(ndir), _speed(nspeed) {}
