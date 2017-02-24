@@ -29,8 +29,8 @@ void general_testing1(void) {
     p2.prt_point();
 
     AP_Point p3 = p2;       // copy an AP_Point to a new AP_Point object
-    p3.set_x(15000);
-    p3.set_y(12000);
+    p3.set_x(15000 * 100);  // expects cm
+    p3.set_y(12000 * 100);  // expects cm
     cout << "\nPrint p3: ";
     p3.prt_point();
 

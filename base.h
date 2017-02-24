@@ -25,12 +25,12 @@ private:
 public:
     // Constructor
     AP_Point(int nx = 0, int ny = 0, int nz = 0) : _x(nx * 100), _y(ny * 100), _z(nz * 100) {}
-    int get_x() const;
-    int get_y() const;
-    int get_z() const;
-    void set_x(const int );
-    void set_y(const int );
-    void set_z(const int );
+    int get_x() const;          // return cm
+    int get_y() const;          // return cm
+    int get_z() const;          // return cm
+    void set_x(const int );     // input parm in cm
+    void set_y(const int );     // input parm in cm
+    void set_z(const int );     // input parm in cm
     void prt_point(void);           // output in meters
     void prt_point(AP_Point &);     // output in meters - pass by reference
 //    void prt_point(AP_Point *);     // output in meters - pass by pointer
