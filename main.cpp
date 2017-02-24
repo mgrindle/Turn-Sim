@@ -66,8 +66,8 @@ int main()
 
     // time looping variables
     int current_timestep;
-    int timestep_incr = THERMAL_SEG_TIMESTEPS;
-    int end_timestep = 400;
+    int main_timestep_incr = THERMAL_SEG_TIMESTEPS;
+    int end_timestep = 200;
 
     // wind variables
     bool use_wind = false;  // use wind data in the simulation
@@ -80,7 +80,8 @@ int main()
     //
     // need timestep_incr = 2 for building initial thermals
     int therm_cnt = 3;      // number of thermals to create
-    int begin_step = 0;
+    int begin_step = 2;
+    bool begin_build = true;
     AP_Point t_base_1(10200, 10200, 0);
     AP_Point t_base_2(10700, 10700, 0);
     AP_Point t_base_3(10500, 11700, 0);
@@ -104,9 +105,9 @@ int main()
 //
 //****************************************************************************
 
-    for (current_timestep = 0; current_timestep < end_timestep; current_timestep += timestep_incr) {
+    for (current_timestep = 2; current_timestep < end_timestep; current_timestep += main_timestep_incr) {
 
-        if (current_timestep < FORMATION_DURATION && timestep_incr != THERMAL_SEG_TIMESTEPS) {
+        if (current_timestep < FORMATION_DURATION && main_timestep_incr != THERMAL_SEG_TIMESTEPS) {
             cout << "******************************************************************\n";
             cout << "*                                                                *\n";
             cout << "*   ABORT EXECUTION - Timestep increment not = 2 during          *\n";
@@ -118,14 +119,16 @@ int main()
             cout << "******************************************************************\n";
             return 10;
         }
-/*
+
         // handle each thermal's evolution for new timestep
         for (int i = 0; i < therm_cnt; ++i) {
-            therms[i].evolve();
-            if (current_timestep == 39)
+            therms[i].evolve(begin_build, main_timestep_incr);
+            if (current_timestep == 160) {
+                cout << "Thermal # " << i << endl;
                 therms[i].prt_thermal();
+            }
         }
-*/
+        begin_build = false;
 
     }
 

@@ -59,31 +59,35 @@ void XG_T_Profile::prt_t_profile(XG_T_Profile &t_profile) {    // print an entir
     }
 }
 
-void XG_T_Profile::shift_phase_1(const int ascent_rate, AP_Point &center) {    // @ 1st timestep, start loading t_profile
-    for (int i = 0; i < ascent_rate; ++i) {
-        centers[i] = center;
-        centers[i].set_z((i + 1) * 100);     // z (elevation) units - centimeters
+void XG_T_Profile::shift_phase_1(const int ascent_rate, const int timestep_incr, AP_Point &center) {    // @ 1st timestep, load t_profile segment 0
+    centers[0] = center;
+    int z_incr = ascent_rate * timestep_incr;
+    centers[0].set_z(z_incr);     // z (elevation) units - centimeters
+}
+
+void XG_T_Profile::shift_phase_2(const int ascent_rate, const int timestep_incr, const int new_top_idx) {    // 2nd phase, building t_profile - no wind impact
+    int z_incr = ascent_rate * timestep_incr;
+    for (int i = new_top_idx; i > 0; --i) {
+        centers[i] = centers[i - 1];
+        centers[i].set_z(centers[i - 1].get_z() + z_incr);   // z (elevation) units - centimeters
     }
 }
 
-void XG_T_Profile::shift_phase_2(const int ascent_rate, AP_Point &center, const int new_top_idx) {    // 2nd phase, building t_profile - no wind impact
-    for (int i = new_top_idx; i >= ascent_rate; --i) {
-        centers[i] = center;
-        centers[i].set_z(centers[i - ascent_rate].get_z() + (ascent_rate * 100));   // z (elevation) units - centimeters
-    }
-}
-
-void XG_T_Profile::shift_phase_3(const int ascent_rate, const int top_idx,
-                                 const bool use_wind, const XG_Wind & ref_wind_grid) {   // 3rd phase - wind impact on top segments
-    for (int i = top_idx; i >= (ascent_rate * FORMATION_SPLIT); --i) {
+void XG_T_Profile::shift_phase_3(const int ascent_rate, const int timestep_incr, const int new_top_idx,
+                                 const bool use_wind, const XG_Wind & ref_wind_grid) {                  // 3rd phase - incl. wind impact on top segments
+    int z_incr = ascent_rate * timestep_incr;
+    for (int i = new_top_idx; i > 0; --i) {
         // Calc new center position if using wind grid in simulation run.  New position
         //    based on local wind data and location of segment center at start of a cycle.
         if (use_wind) {
-
+// TODO (ty#1#): Add to call function to move center x & y values ...
+//
+            centers[i] = centers[i - 1];
         } else {
-
+            centers[i] = centers[i - 1];
         }
-        centers[i].set_z(centers[i - ascent_rate].get_z() + (ascent_rate * 100));   // z (elevation) units - centimeters
+        // new z value not dependent on wind use
+        centers[i].set_z(centers[i - 1].get_z() + z_incr);   // z (elevation) units - centimeters
     }
 }
 
@@ -132,7 +136,7 @@ void XG_Thermal::prt_thermal(void) {      // print members of the object
     std::cout << std::endl;
 }
 
-void XG_Thermal::evolve(void) {
+void XG_Thermal::evolve(bool start_a_build, const int timestep_incr) {
     if (_col_height_idx >= (FORMATION_DURATION / THERMAL_SEG_TIMESTEPS)) {
         // handles a fully formed thermal to reflect existing wind impacts
 
@@ -142,19 +146,26 @@ void XG_Thermal::evolve(void) {
     }
     else {
         // this branch is for building a new thermal profile
+        if (_col_height_idx == 0 && start_a_build) {
+            // populate first row of a new thermal profile
+            _t_profile.XG_T_Profile::shift_phase_1(_ascent_rate, timestep_incr, _base_point);
+            return;
+        }
         if (_col_height_idx < (FORMATION_SPLIT / THERMAL_SEG_TIMESTEPS)) {
             // Build bottom section of thermal always no wind
-            _t_profile.XG_T_Profile::shift_phase_1(_ascent_rate, _base_point);
-            ++_col_height_idx;
+            ++_col_height_idx;      // increase
+            _t_profile.XG_T_Profile::shift_phase_2(_ascent_rate, timestep_incr, _col_height_idx);
+
 
         } else {
-            // Handles creation top section of the thermal profile after
+            // Build top section of the thermal profile after
             // the FORMATION_SPLIT time has passed.
             // Wind effects top half (if wind is being used)
 
-            //int top_idx = _col_height_idx + _ascent_rate;
-            _t_profile.XG_T_Profile::shift_phase_2(_ascent_rate, _base_point, (_col_height_idx + 1));
             ++_col_height_idx;
+            _t_profile.XG_T_Profile::shift_phase_3(_ascent_rate, timestep_incr, _col_height_idx,
+                                                   _use_wind, _ref_wind_grid);
+
 
         }
         // end branch for building a new thermal profile

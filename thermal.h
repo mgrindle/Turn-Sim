@@ -58,10 +58,10 @@ struct XG_T_Profile {
     ~XG_T_Profile();                // destructor
     void prt_t_profile(void);       // print an entire thermal profile
     void prt_t_profile(XG_T_Profile &); // print entire profile using address of a profile
-    void shift_phase_1(const int ascent_rate, AP_Point &center);  // 1st timestep for building t_profile
-    void shift_phase_2(const int ascent_rate, AP_Point &center, const int top_idx);  // 2nd phase - no wind impact
-    void shift_phase_3(const int ascent_rate, const int top_idx,
-                       const bool use_wind, const XG_Wind & ref_wind_grid);  // 3rd phase - wind impact on top segments
+    void shift_phase_1(const int ascent_rate, const int timestep_incr, AP_Point &center);       // 1st timestep for building t_profile
+    void shift_phase_2(const int ascent_rate, const int timestep_incr, const int new_top_idx);  // 2nd phase - no wind impact
+    void shift_phase_3(const int ascent_rate, const int timestep_incr, const int new_top_idx,
+                       const bool use_wind, const XG_Wind & ref_wind_grid);                     // 3rd phase - wind impact on top segments
 };
 
 //****************************************
@@ -85,8 +85,8 @@ public:
                 const int disperse_elev,
                 const bool use_wind,
                 const XG_Wind &wind);
-    void prt_thermal(void);             // print all members of the object
-    void evolve(void);                  // thermal evolution over time
+    void prt_thermal(void);                                     // print all members of the object
+    void evolve(bool start_a_build, const int timestep_incr);   // thermal evolution over time
 };
 
 

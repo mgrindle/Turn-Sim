@@ -31,9 +31,9 @@ public:
     void set_x(const int );     // input parm in cm
     void set_y(const int );     // input parm in cm
     void set_z(const int );     // input parm in cm
-    void prt_point(void);           // output in meters
-    void prt_point(AP_Point &);     // output in meters - pass by reference
-//    void prt_point(AP_Point *);     // output in meters - pass by pointer
+    void prt_point(void);           // output x & y in meters, z in cm
+    void prt_point(AP_Point &);     // output x & y in meters, z in cm - pass by reference
+//    void prt_point(AP_Point *);     // output x & y in meters, z in cm - pass by pointer
 };
 
 //  A general speed vector defined in a polar coordinate system
