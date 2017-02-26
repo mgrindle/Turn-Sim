@@ -14,13 +14,6 @@
 // For struct type: XG_P_Wind_Element
 //*********************************************************
 
-XG_P_Wind_Element XG_Wind::find_local_wind(const AP_Point & point_to_move) {
-
-    // only here to get good compile
-    XG_P_Wind_Element local_wind;
-    return local_wind;
-
-}
 
 
 //*********************************************************
@@ -156,4 +149,13 @@ void XG_Wind::prt_wind() {
         std::cout << "       x coord. - 0           " << _x_bounds[0] / 100 << "         " << _x_bounds[1] / 100 << "          max\n";
         std::cout << "                                     South\n\n";
     }
+}
+
+
+XG_P_Wind_Element XG_Wind::find_local_wind(const AP_Point & point_to_move) {
+
+    // only here to get good compile
+    XG_P_Wind_Element local_wind;
+    return local_wind;
+
 }
