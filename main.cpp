@@ -67,7 +67,7 @@ int main()
     // time looping variables
     int current_timestep;
     int main_timestep_incr = THERMAL_SEG_TIMESTEPS;
-    int end_timestep = 200;
+    int end_timestep = 400;
 
     // wind variables
     bool use_wind = false;  // use wind data in the simulation
@@ -123,7 +123,7 @@ int main()
         // handle each thermal's evolution for new timestep
         for (int i = 0; i < therm_cnt; ++i) {
             therms[i].evolve(begin_build, main_timestep_incr);
-            if (current_timestep == 160) {
+            if (current_timestep == 322) {
                 cout << "Thermal # " << i << endl;
                 therms[i].prt_thermal();
             }

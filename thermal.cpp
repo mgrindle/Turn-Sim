@@ -82,8 +82,13 @@ void XG_T_Profile::shift_phase_3(const int ascent_rate, const int timestep_incr,
         if (use_wind) {
 // TODO (ty#1#): Add to call function to move center x & y values ...
 //
+            // calc new x,y coord based on local wind and location
+            //  of the center before it moves up and over.
+            XG_P_Wind_Element curr_wind_element = ref_wind_grid.find_local_wind(centers[i - 1]);
+            int l_wind_dir_recip = XG_P_Wind_Element.wind_dir.wind_dir_recip();
             centers[i] = centers[i - 1];
         } else {
+            // not using wind, x,y coord stay the same
             centers[i] = centers[i - 1];
         }
         // new z value not dependent on wind use

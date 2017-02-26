@@ -14,7 +14,7 @@
  */
 #include "base.h"
 
-//  Define system wide instants for wind
+//  Define system wide constants for wind
 
 //  End system wide constants
 
@@ -22,7 +22,8 @@
 // Define properties of Wind
 //************************************
 // 1. The 'wind direction' is the direction from which the wind originates.
-// 2. Wind speeds are measured in meters/second (1 m/s ~= 2.24 mph)
+// 2. Wind speeds are entered in meters/second (1 m/s ~= 2.24 mph)
+// 2a.Wind speeds are saved in centimeters/decisecond (1 mph ~= 4.47 cm/ds)
 // 3. The wind area grid is defined as:
 //      - a 3 x 3 grid
 //      - the western boundary of the wind area is x=0 (longitude)
@@ -31,7 +32,7 @@
 //      - the northern boundary of the wind area is y=largest integer value
 // 4. Each cell of the wind area grid contains two values:
 //      - wind direction (degrees)
-//      - wind speed (m/s)
+//      - wind speed (cm/ds)
 // 5. A wind area has a low elevation component and an upper
 //      elevation component. Delineated by an boundary elevation. The
 //      upper elevation component extends unlimited.
@@ -49,7 +50,7 @@
 struct XG_P_Wind_Element {
 public:
     int wind_dir;       // wind direction (azimuth degrees: 0-359)
-    int wind_s;         // wind speed (cm/s)
+    int wind_s;         // wind speed (cm/ds)
 };
 
 //****************************************
@@ -58,13 +59,14 @@ public:
 struct XG_Wind_Element {
 private:
     int _wind_dir;      // wind direction (azimuth degrees: 0-359)
-    int _wind_s;        // wind speed (cm/s)
+    int _wind_s;        // wind speed (cm/ds)
 
 public:
-    // wind_s entered as m/s then converted/stored as cm/s
-    XG_Wind_Element(int nwd = 0, int nws = 0) : _wind_dir(nwd), _wind_s(nws * 100) {}
+    // wind_s entered as m/s then converted/stored as cm/ds
+    XG_Wind_Element(int nwd = 0, int nws = 0) : _wind_dir(nwd), _wind_s(nws * 10) {}
     //~XG_Wind_Element();
     void set_element(int wd, int ws);   // set member values
+                                        // * only called by XG_Wind initialize functions
     XG_P_Wind_Element get_element() const;    // get a wind element as returns a struct
     int wind_dir_recip();               // calc reciprocal of _wind_dir - the force direction
     void prt_wind_element();
@@ -88,6 +90,9 @@ public:
     void wind_case_a();    // For NO WINDs, initialize XG_Wind values
     void wind_case_b();    // For light winds, initialize XG_Wind values
     void prt_wind();
+    XG_P_Wind_Element find_local_wind(const AP_Point & point_to_move);    // Get a wind element from the
+                                                                    // wind area grid based on the
+                                                                    // x,y,z location of some object
 };
 
 #endif // WIND_H_INCLUDED

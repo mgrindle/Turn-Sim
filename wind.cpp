@@ -11,18 +11,31 @@
 #include "wind.h"
 
 //*********************************************************
+// For struct type: XG_P_Wind_Element
+//*********************************************************
+
+XG_P_Wind_Element XG_Wind::find_local_wind(const AP_Point & point_to_move) {
+
+    // only here to get good compile
+    XG_P_Wind_Element local_wind;
+    return local_wind;
+
+}
+
+
+//*********************************************************
 // For struct type: XG_Wind_Element
 //*********************************************************
 
 void XG_Wind_Element::set_element(int wd, int ws) {      // set member values
     _wind_dir = wd;
-    _wind_s = ws * 100;     // convert meters/sec to centimeters/sec
+    _wind_s = ws * 10;     // convert m/s to cm/ds
 }
 
 XG_P_Wind_Element XG_Wind_Element::get_element() const {    // get a wind element as returns a struct
     XG_P_Wind_Element pwe;
     pwe.wind_dir = _wind_dir;
-    pwe.wind_s = _wind_s;       // in centimeters/sec
+    pwe.wind_s = _wind_s;       // in cm/ds
     return pwe;
 }
 
@@ -35,8 +48,8 @@ int XG_Wind_Element::wind_dir_recip() {     // calc reciprocal of _wind_dir - th
 }
 
 void XG_Wind_Element::prt_wind_element() {
-    // convert wind_s from cm/s to m/s
-    std::cout << "WE: (" << _wind_dir << ", " << _wind_s / 100  << ")";
+    // convert wind_s from cm/ds to m/s
+    std::cout << "WE: (" << _wind_dir << ", " << _wind_s / 10  << ")";
 }
 
 
@@ -75,7 +88,7 @@ void XG_Wind::wind_case_b() {
     int k = 1;          // set upper level wind elements
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
-            // wind_s in m/s
+            // wind_s in m/s, function converts to cm/ds
             _w_area_grid[i] [j] [k].set_element(270, (7));
         }
     }
@@ -83,7 +96,7 @@ void XG_Wind::wind_case_b() {
     // set lower level wind elements
     k = 0;
     int j = 0;
-    // wind_s in m/s
+    // wind_s in m/s, function converts to cm/ds
     _w_area_grid[0] [j] [k].set_element(180, 3);
     _w_area_grid[1] [j] [k].set_element(180, 3);
     _w_area_grid[2] [j] [k].set_element(180, 3);
