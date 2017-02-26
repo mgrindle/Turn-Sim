@@ -19,6 +19,3 @@ void general_testing2(void);
 
 #endif // TESTING_H_INCLUDED
 
-// test ssh change
-// test2 ssh keys change
-// test3 ssh key change
