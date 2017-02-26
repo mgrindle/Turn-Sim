@@ -81,7 +81,7 @@ void XG_Wind::wind_case_b() {
     int k = 1;          // set upper level wind elements
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
-            // wind_s in m/s, function converts to cm/ds
+            // speed in m/s, function converts to cm/ds
             _w_area_grid[i] [j] [k].set_element(270, (7));
         }
     }
@@ -89,7 +89,7 @@ void XG_Wind::wind_case_b() {
     // set lower level wind elements
     k = 0;
     int j = 0;
-    // wind_s in m/s, function converts to cm/ds
+    // speed in m/s, function converts to cm/ds
     _w_area_grid[0] [j] [k].set_element(180, 3);
     _w_area_grid[1] [j] [k].set_element(180, 3);
     _w_area_grid[2] [j] [k].set_element(180, 3);
