@@ -68,7 +68,7 @@ public:
     void set_element(int wd, int ws);   // set member values
                                         // * only called by XG_Wind initialize functions
     XG_P_Wind_Element get_element() const;    // get a wind element as returns a struct
-    int wind_dir_recip();               // calc reciprocal of _wind_dir - the force direction
+    int wind_dir_recip() const;               // calc reciprocal of _wind_dir - the force direction
     void prt_wind_element();
 
 };
@@ -90,9 +90,9 @@ public:
     void wind_case_a();    // For NO WINDs, initialize XG_Wind values
     void wind_case_b();    // For light winds, initialize XG_Wind values
     void prt_wind();
-    XG_P_Wind_Element find_local_wind(const AP_Point & point_to_move);    // Get a wind element from the
-                                                                    // wind area grid based on the
-                                                                    // x,y,z location of some object
+//    XG_P_Wind_Element find_local_wind(const AP_Point & point_to_move);    // Get a wind element from the
+//                                                                    // wind area grid based on the
+//                                                                    // x,y,z location of some object
 };
 
 #endif // WIND_H_INCLUDED
