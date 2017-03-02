@@ -85,6 +85,7 @@ public:
                 const int disperse_elev,
                 const bool use_wind,
                 const XG_Wind &wind);
+    ~XG_Thermal();
     void prt_thermal(void);                                     // print all members of the object
     void evolve(bool start_a_build, const int timestep_incr);   // thermal evolution over time
 };

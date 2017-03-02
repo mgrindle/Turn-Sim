@@ -20,6 +20,8 @@
 // For struct type: XG_Wind_Element
 //*********************************************************
 
+XG_Wind_Element::~XG_Wind_Element() {}
+
 void XG_Wind_Element::set_element(int wd, int ws) {      // set member values
     _wind_dir = wd;
     _wind_s = ws * 10;     // convert m/s to cm/ds
@@ -58,6 +60,8 @@ XG_Wind::XG_Wind() {            // constructor
     _low_elev_bound = 0;
     XG_Wind_Element _w_area_grid;
 }
+
+XG_Wind::~XG_Wind() {}
 
 void XG_Wind::wind_case_a() {
     _x_bounds[0] = 9000 * 100;  // convert meters to centimeters

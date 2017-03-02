@@ -13,6 +13,8 @@
 
 // For AP_Point class
 
+AP_Point::~AP_Point() {}
+
 int AP_Point::get_x() const {
     return _x;
 };
@@ -56,6 +58,8 @@ void AP_Point::prt_point(AP_Point & p) {
 
 
 // For AP_Speed_Vec class
+
+AP_Speed_Vec::~AP_Speed_Vec() {}
 
 int AP_Speed_Vec::get_dir() const {
     return _dir;

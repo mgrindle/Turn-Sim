@@ -25,6 +25,7 @@ private:
 public:
     // Constructor
     AP_Point(int nx = 0, int ny = 0, int nz = 0) : _x(nx * 100), _y(ny * 100), _z(nz * 100) {}
+    ~AP_Point();                //destructor
     int get_x() const;          // return cm
     int get_y() const;          // return cm
     int get_z() const;          // return cm
@@ -47,6 +48,7 @@ private:
 public:
     // constructor
     AP_Speed_Vec(int ndir = 0, int nspeed = 0) : _dir(ndir), _speed(nspeed) {}
+    ~AP_Speed_Vec();                    //destructor
     int get_dir() const;
     int get_speed() const;
     void set_dir(const int);

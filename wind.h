@@ -64,7 +64,7 @@ private:
 public:
     // wind_s entered as m/s then converted/stored as cm/ds
     XG_Wind_Element(int nwd = 0, int nws = 0) : _wind_dir(nwd), _wind_s(nws * 10) {}
-    //~XG_Wind_Element();
+    ~XG_Wind_Element();
     void set_element(int wd, int ws);   // set member values
                                         // * only called by XG_Wind initialize functions
     XG_P_Wind_Element get_element() const;    // get a wind element as returns a struct
@@ -86,7 +86,7 @@ private:
 
 public:
     XG_Wind();
-    //~XG_Wind();
+    ~XG_Wind();
     void wind_case_a();    // For NO WINDs, initialize XG_Wind values
     void wind_case_b();    // For light winds, initialize XG_Wind values
     void prt_wind();

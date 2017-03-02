@@ -24,7 +24,8 @@ XG_T_Profile::XG_T_Profile() {              // constructor
 }
 
 XG_T_Profile::~XG_T_Profile() {             // destructor
-    delete [] centers;
+    //delete [] centers;        // this causes a seq fault at end of the program!!!
+    std::cout << "Finished XG_T_Profile descructor\n";
 }
 
 void XG_T_Profile::prt_t_profile(void) {    // print an entire thermal profile
@@ -120,6 +121,10 @@ XG_Thermal::XG_Thermal(const int timestep, const int diameter,    // constructor
     _disburse_elev = disperse_elev * 100;   // convert to centimeters
     XG_T_Profile _t_profile;
     _use_wind = use_wind;
+}
+
+XG_Thermal::~XG_Thermal() {
+    std::cout << "Finished XG_Thermal destructor\n";
 }
 
 void XG_Thermal::prt_thermal(void) {      // print members of the object
