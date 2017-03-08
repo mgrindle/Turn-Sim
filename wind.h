@@ -51,6 +51,7 @@ struct XG_P_Wind_Element {
 public:
     int wind_dir;       // wind direction (azimuth degrees: 0-359)
     int wind_s;         // wind speed (cm/ds)
+    int wind_dir_recip; // 180 deg opposite of wind_dir
 };
 
 //****************************************
@@ -60,17 +61,20 @@ struct XG_Wind_Element {
 private:
     int _wind_dir;      // wind direction (azimuth degrees: 0-359)
     int _wind_s;        // wind speed (cm/ds)
+    int _wind_dir_recip;// 180 deg opposite of _wind_dir
+    void set_dir_recip();
 
 public:
     // wind_s entered as m/s then converted/stored as cm/ds
-    XG_Wind_Element(int nwd = 0, int nws = 0) : _wind_dir(nwd), _wind_s(nws * 10) {}
+    XG_Wind_Element(int nwd = 0, int nws = 0) : _wind_dir(nwd), _wind_s(nws * 10),
+                                            _wind_dir_recip(nwd > 179 ? nwd - 180 : nwd + 180) {}
     ~XG_Wind_Element();
     void set_element(int wd, int ws);   // set member values
                                         // * only called by XG_Wind initialize functions
     XG_P_Wind_Element get_element() const;    // get a wind element as returns a struct
     int wind_dir_recip() const;               // calc reciprocal of _wind_dir - the force direction
     void prt_wind_element();
-
+    void prt_wind_element_all();
 };
 
 

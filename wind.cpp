@@ -20,17 +20,27 @@
 // For struct type: XG_Wind_Element
 //*********************************************************
 
-XG_Wind_Element::~XG_Wind_Element() {}
+XG_Wind_Element::~XG_Wind_Element() {}      // destructor
+
+void XG_Wind_Element::set_dir_recip() {
+    if (_wind_dir > 179) {                  // values 0-359
+        _wind_dir_recip = _wind_dir - 180;
+    } else {
+        _wind_dir_recip = _wind_dir + 180;
+    }
+}
 
 void XG_Wind_Element::set_element(int wd, int ws) {      // set member values
     _wind_dir = wd;
     _wind_s = ws * 10;     // convert m/s to cm/ds
+    set_dir_recip();
 }
 
 XG_P_Wind_Element XG_Wind_Element::get_element() const {    // get a wind element as returns a struct
     XG_P_Wind_Element pwe;
     pwe.wind_dir = _wind_dir;
     pwe.wind_s = _wind_s;       // in cm/ds
+    pwe.wind_dir_recip = _wind_dir_recip;
     return pwe;
 }
 
