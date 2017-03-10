@@ -73,6 +73,29 @@ XG_Wind::XG_Wind() {            // constructor
 
 XG_Wind::~XG_Wind() {}
 
+int XG_Wind::get_x_bounds(int idx) const {
+    return _x_bounds[idx];
+}
+
+int XG_Wind::get_y_bounds(int idx) const {
+    return _y_bounds[idx];
+}
+
+int XG_Wind::get_low_elev_bound() const {
+    return _low_elev_bound;
+}
+
+XG_P_Wind_Element XG_Wind::get_w_area_grid_element(int i, int j, int k) const {
+// TODO (ty#1#): Finish function - delete unused lines
+//    XG_P_Wind_Element element;
+//    element.wind_dir = _w_area_grid[i][j][k]._wind_dir;
+//    element.wind_s = _w_area_grid[i][j][k]._wind_s;
+//    element.wind_dir_recip = _w_area_grid[i][j][k]._wind_dir_recip;
+    XG_P_Wind_Element element = _w_area_grid[i][j][k].get_element();
+    return element;
+}
+
+
 void XG_Wind::wind_case_a() {
     _x_bounds[0] = 9000 * 100;  // convert meters to centimeters
     _x_bounds[1] = 11500 * 100;

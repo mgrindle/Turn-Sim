@@ -70,7 +70,7 @@ int main()
     int end_timestep = 400;
 
     // wind variables
-    bool use_wind = false;  // use wind data in the simulation
+    bool use_wind = true;  // use wind data in the simulation
     XG_Wind wind_grid;
     wind_grid.wind_case_b();
 

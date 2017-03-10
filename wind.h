@@ -91,12 +91,15 @@ private:
 public:
     XG_Wind();
     ~XG_Wind();
+    int get_x_bounds(int idx) const;
+    int get_y_bounds(int idx) const;
+    int get_low_elev_bound() const;
+    XG_P_Wind_Element get_w_area_grid_element(int i, int j, int k) const;   // Get a wind element from the
+                                                                            // wind area grid based on the
+                                                                            // x,y,z location of some object
     void wind_case_a();    // For NO WINDs, initialize XG_Wind values
     void wind_case_b();    // For light winds, initialize XG_Wind values
     void prt_wind();
-//    XG_P_Wind_Element find_local_wind(const AP_Point & point_to_move);    // Get a wind element from the
-//                                                                    // wind area grid based on the
-//                                                                    // x,y,z location of some object
 };
 
 #endif // WIND_H_INCLUDED

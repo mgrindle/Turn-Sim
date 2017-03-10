@@ -40,7 +40,7 @@ void AP_Point::set_z(const int new_z) {
 };
 
 // coordinates are output x & y in meters, z in cm
-void AP_Point::prt_point(void) {
+void AP_Point::prt_point(void) const {
     std::cout << "(" << _x/100 << ", " << _y/100 << ", " << _z << ")";
 }
 
