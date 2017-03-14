@@ -72,7 +72,7 @@ class XG_Thermal {
 private:
     int _creation_timestep;
     int _diameter;              // in centimeters
-    AP_Point _base_point;       // in centimeters
+    AP_Point _base_point;       // Point where thermal started - in centimeters
     int _col_height_idx;        // highest row (index) populated during build
     int _ascent_rate;           // in cm/ds
     int _disburse_elev;         // in centimeters

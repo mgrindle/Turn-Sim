@@ -65,7 +65,6 @@ AP_Point revise_loc_for_wind(const AP_Point & in_point, const int timestep_incr,
                     cos((90 - curr_wind_element.wind_dir_recip) * pi() / 180);
     int delta_y = curr_wind_element.wind_s * timestep_incr *
                     sin((90 - curr_wind_element.wind_dir_recip) * pi() / 180);
-    int new_y = in_point.get_y() + delta_y;
     AP_Point rev_loc;
     rev_loc.set_x(in_point.get_x() + delta_x);
     rev_loc.set_y(in_point.get_y() + delta_y);
