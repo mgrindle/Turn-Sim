@@ -75,8 +75,8 @@ void XG_T_Profile::shift_phase_2(const int ascent_rate, const int timestep_incr,
     }
 }
 
-void XG_T_Profile::shift_phase_3(const int ascent_rate, const int timestep_incr, const int new_top_idx,
-                                 const bool use_wind, const XG_Wind & ref_wind_grid) {                  // 3rd phase - incl. wind impact on top segments
+void XG_T_Profile::shift_phase_3(const int ascent_rate, const int timestep_incr, const int new_top_idx,     // 3rd phase - incl. wind impact on top segments
+                                 const bool use_wind, const XG_Wind & ref_wind_grid) {
     int z_incr = ascent_rate * timestep_incr;
     for (int i = new_top_idx; i > 0; --i) {
         // Calc new center position (x & y) if using wind grid in simulation run.  New position
@@ -96,6 +96,25 @@ void XG_T_Profile::shift_phase_3(const int ascent_rate, const int timestep_incr,
         }
         // new z value not dependent on wind use
         centers[i].set_z(centers[i - 1].get_z() + z_incr);   // z (elevation) units - centimeters
+    }
+}
+
+void XG_T_Profile::shift_phase_4(const int ascent_rate, const int timestep_incr, const int top_idx,         // 4th phase - wind impacts all segments
+                                    const bool use_wind, const XG_Wind & ref_wind_grid) {
+    int z_incr = ascent_rate * timestep_incr;
+    for (int i = 0; i < top_idx; ++i) {
+        // Calc new center position (x & y) if using wind grid in simulation run.  New position
+        //    based on local wind data and location of segment center at start of a cycle.
+        if (use_wind) {
+            // calc new x,y coord based on local wind and location
+            //  of the center before it moves up and over.
+            AP_Point new_ctr = revise_loc_for_wind(centers[i], timestep_incr, ref_wind_grid);
+            centers[i].set_x(new_ctr.get_x());
+            centers[i].set_y(new_ctr.get_y());
+            // z-coord. is set below
+        }
+        // new z value not dependent on wind use
+        centers[i].set_z(centers[i].get_z() + z_incr);   // z (elevation) units - centimeters
     }
 }
 
@@ -150,11 +169,11 @@ void XG_Thermal::prt_thermal(void) {      // print members of the object
 
 void XG_Thermal::evolve(bool start_a_build, const int timestep_incr) {
     if (_col_height_idx >= (FORMATION_DURATION / THERMAL_SEG_TIMESTEPS)) {
-        // handles a fully formed thermal to reflect existing wind impacts
-
-// TODO (ty#1#): Add code for thermal development after build phase
-
-
+        // Handles a fully formed thermal to reflect existing wind impacts.
+        // Only data in the T-profile is modified. All other parameters about
+        // the thermal are fixed and will not change.
+        _t_profile.XG_T_Profile::shift_phase_4(_ascent_rate, timestep_incr, _col_height_idx,
+                                                   _use_wind, _ref_wind_grid);
     }
     else {
         // this branch is for building a new thermal profile

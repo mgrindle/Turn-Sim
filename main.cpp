@@ -130,6 +130,15 @@ int main()
         }
         begin_build = false;
 
+        // Test print thermal data
+        if (current_timestep == 390) {
+            for (int i = 0; i < therm_cnt; ++i) {
+                cout << "Timestep: " << current_timestep << " Thermal # " << i << endl;
+                therms[i].prt_thermal();
+            }
+        }
+
+
     }
 
     cout << "Hello world!" << endl;
