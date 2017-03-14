@@ -32,7 +32,8 @@ public:
     void set_x(const int );     // input parm in cm
     void set_y(const int );     // input parm in cm
     void set_z(const int );     // input parm in cm
-    void prt_point(void) const;           // output x & y in meters, z in cm
+    void prt_point(void) const;         // output x & y in meters, z in cm
+    void prt_point_real(void) const;    // output x,y,z all in cm
     void prt_point(AP_Point &);     // output x & y in meters, z in cm - pass by reference
 //    void prt_point(AP_Point *);     // output x & y in meters, z in cm - pass by pointer
 };

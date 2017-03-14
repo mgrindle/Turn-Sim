@@ -36,7 +36,7 @@ void XG_T_Profile::prt_t_profile(void) {    // print an entire thermal profile
 
     for (i = 0, j = 1; i < height; ++i, ++j) {
         std::cout << "Idx " << i << " - ";
-        centers[i].prt_point();
+        centers[i].prt_point_real();
         std::cout << " ";
         if (j == col_cnt) {
             std::cout << std::endl;
@@ -79,18 +79,19 @@ void XG_T_Profile::shift_phase_3(const int ascent_rate, const int timestep_incr,
                                  const bool use_wind, const XG_Wind & ref_wind_grid) {                  // 3rd phase - incl. wind impact on top segments
     int z_incr = ascent_rate * timestep_incr;
     for (int i = new_top_idx; i > 0; --i) {
-        // Calc new center position if using wind grid in simulation run.  New position
+        // Calc new center position (x & y) if using wind grid in simulation run.  New position
         //    based on local wind data and location of segment center at start of a cycle.
-        if (use_wind) {
-// TODO (ty#1#): Add to call function to move center x & y values ...
-//
+        // Also, only the segments in the top half of the t_profile are impacted by any
+        //    existing wind at the center's location.
+        if (use_wind && i > (FORMATION_SPLIT / THERMAL_SEG_TIMESTEPS) - 1) {
             // calc new x,y coord based on local wind and location
             //  of the center before it moves up and over.
-            AP_Point new_ctr = revise_loc_for_wind(centers[i - 1], ref_wind_grid);
-
-            centers[i] = centers[i - 1];
+            AP_Point new_ctr = revise_loc_for_wind(centers[i - 1], timestep_incr, ref_wind_grid);
+            centers[i].set_x(new_ctr.get_x());
+            centers[i].set_y(new_ctr.get_y());
+            // z-coord. is set below
         } else {
-            // not using wind, x,y coord stay the same
+            // not using wind or segments in lower half of t_profile, x,y coord stay the same
             centers[i] = centers[i - 1];
         }
         // new z value not dependent on wind use
@@ -176,7 +177,6 @@ void XG_Thermal::evolve(bool start_a_build, const int timestep_incr) {
             ++_col_height_idx;
             _t_profile.XG_T_Profile::shift_phase_3(_ascent_rate, timestep_incr, _col_height_idx,
                                                    _use_wind, _ref_wind_grid);
-
 
         }
         // end branch for building a new thermal profile

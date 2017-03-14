@@ -41,7 +41,12 @@ void AP_Point::set_z(const int new_z) {
 
 // coordinates are output x & y in meters, z in cm
 void AP_Point::prt_point(void) const {
-    std::cout << "(" << _x/100 << ", " << _y/100 << ", " << _z << ")";
+    std::cout << "(" << _x / 100 << ", " << _y / 100 << ", " << _z << ")";
+}
+
+// coordinates x,y,z are output in native format - cm
+void AP_Point::prt_point_real(void) const {
+    std::cout << "(" << _x << ", " << _y << ", " << _z << ")";
 }
 
 // Using pass by reference to a AP_Point, print a point
