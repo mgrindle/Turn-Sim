@@ -86,7 +86,7 @@ void XG_T_Profile::shift_phase_3(const int ascent_rate, const int timestep_incr,
         if (use_wind && i > (FORMATION_SPLIT / THERMAL_SEG_TIMESTEPS) - 1) {
             // calc new x,y coord based on local wind and location
             //  of the center before it moves up and over.
-            AP_Point new_ctr = revise_loc_for_wind(centers[i - 1], timestep_incr, ref_wind_grid);
+            AP_Point new_ctr = revise_therm_center_for_wind(centers[i - 1], timestep_incr, ref_wind_grid);
             centers[i].set_x(new_ctr.get_x());
             centers[i].set_y(new_ctr.get_y());
             // z-coord. is set below
@@ -108,7 +108,7 @@ void XG_T_Profile::shift_phase_4(const int ascent_rate, const int timestep_incr,
         if (use_wind) {
             // calc new x,y coord based on local wind and location
             //  of the center before it moves up and over.
-            AP_Point new_ctr = revise_loc_for_wind(centers[i], timestep_incr, ref_wind_grid);
+            AP_Point new_ctr = revise_therm_center_for_wind(centers[i], timestep_incr, ref_wind_grid);
             centers[i].set_x(new_ctr.get_x());
             centers[i].set_y(new_ctr.get_y());
             // z-coord. is set below

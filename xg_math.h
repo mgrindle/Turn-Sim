@@ -31,10 +31,23 @@ constexpr double pi() { return atan2(0, -1); }
 XG_P_Wind_Element find_local_wind(const AP_Point & wind_point, const XG_Wind & wind);
 
 //
-// Obtain revised location due to wind effects
+// Calc the impact of a speed vector on a point locations x,y coords only
+//
+// Return a revised location
+AP_Point calc_new_xy(const AP_Point & in_point, const int timestep_incr, AP_Speed_Vec & speed_vec);
+
+
+//
+// Obtain revised plane x,y location due to wind effects
 //
 // Return a revised point position due to local wind effects
-AP_Point revise_loc_for_wind(const AP_Point & in_point, const int timestep_incr, const XG_Wind & wind);
+AP_Point revise_plane_loc_for_wind(const AP_Point & in_point, const int timestep_incr, const XG_Wind & wind);
+
+//
+// Obtain revised thermal center location x,y  due to wind effects
+//
+// Return a revised point position due to local wind effects
+AP_Point revise_therm_center_for_wind(const AP_Point & in_point, const int timestep_incr, const XG_Wind & wind);
 
 
 #endif // XG_MATH_H_INCLUDED
