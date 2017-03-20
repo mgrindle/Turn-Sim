@@ -107,11 +107,13 @@ AP_Point revise_plane_loc_for_wind(const AP_Point & in_point, const int timestep
     //  Q: III |  Q: IV
     //         |
     if (angle_result_i < 0) {
-                    angle_result_i += 360;
+        angle_result_i += 360;
     }
     course_corr_vec.set_dir(angle_result_i);
     course_corr_vec.set_speed(round(sqrt(x_comp_sum * x_comp_sum + y_comp_sum * y_comp_sum)));
-
+    // Compute a revised plane location that represents the plane's ground course location
+    AP_Point rev_loc = calc_new_xy(in_point, timestep_incr, course_corr_vec);
+    return rev_loc;
 }
 
 //
