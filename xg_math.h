@@ -41,7 +41,8 @@ AP_Point calc_new_xy(const AP_Point & in_point, const int timestep_incr, AP_Spee
 // Obtain revised plane x,y location due to wind effects
 //
 // Return a revised point position due to local wind effects
-AP_Point revise_plane_loc_for_wind(const AP_Point & in_point, const int timestep_incr, const XG_Wind & wind);
+AP_Point revise_plane_loc_for_wind(const AP_Point & in_point, const int timestep_incr, const XG_Wind & wind,
+                                   const AP_Speed_Vec & p_heading_vec);
 
 //
 // Obtain revised thermal center location x,y  due to wind effects

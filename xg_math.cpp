@@ -53,14 +53,12 @@ XG_P_Wind_Element find_local_wind(const AP_Point & wind_point, const XG_Wind & w
     return wind.get_w_area_grid_element(x_idx, y_idx, z_idx);
 }
 
-
 //
 // Calc the impact of a speed vector on a point locations x,y coords only
 //  Coordinate z is copied from in_point
 //
 // Return a revised location
 AP_Point calc_new_xy(const AP_Point & in_point, const int timestep_incr, AP_Speed_Vec & speed_vec) {
-// TODO (ty#1#): Change delta calc for correct data items
     // calc the x,y offsets
     int delta_x = speed_vec.get_speed() * timestep_incr *
                     cos((90 - speed_vec.get_dir()) * pi() / 180);
@@ -70,7 +68,50 @@ AP_Point calc_new_xy(const AP_Point & in_point, const int timestep_incr, AP_Spee
     new_loc.set_x(in_point.get_x() + delta_x);
     new_loc.set_y(in_point.get_y() + delta_y);
     new_loc.set_z(in_point.get_z());
+
+//// testing - print data
+//    std::cout << "Delta x: " << delta_x << " and Delta y: " << delta_y << " New location: ";
+//    new_loc.prt_point_real();
+//    std::cout << "\n";
     return new_loc;
+}
+
+//
+// Obtain revised plane x,y location due to wind effects
+//
+// Return a revised point position due to local wind effects
+AP_Point revise_plane_loc_for_wind(const AP_Point & in_point, const int timestep_incr, const XG_Wind & wind,
+                                   const AP_Speed_Vec & p_heading_vec) {
+    // obtain local wind condition
+    XG_P_Wind_Element curr_wind_element = find_local_wind(in_point, wind);
+    // This section combines the two speed vectors (plane & wind)
+    //
+    // The result angle and speed determine the ground course the
+    //      plane follows during this timestep
+    int x_comp_sum = p_heading_vec.get_speed() * cos(p_heading_vec.get_dir() * pi() / 180) +        // plane comp.
+                    curr_wind_element.wind_s * cos(curr_wind_element.wind_dir_recip * pi() / 180);  // wind comp.
+    int y_comp_sum = p_heading_vec.get_speed() * sin(p_heading_vec.get_dir() * pi() / 180) +        // plane comp.
+                    curr_wind_element.wind_s * sin(curr_wind_element.wind_dir_recip * pi() / 180);  // wind comp.
+    AP_Speed_Vec course_corr_vec;
+    int angle_result_i = round(atan2(y_comp_sum, x_comp_sum) * 180 / pi());
+    // Correct the preliminary angle when result is
+    //   a negative angle.
+    // This occurs when the result vector is in
+    //   the negative x zone - quadrants 2 & 3.
+    //
+    //         |+y
+    //  Q: II  |  Q: I
+    //         |       +x
+    //  ----------------
+    //         |
+    //  Q: III |  Q: IV
+    //         |
+    if (angle_result_i < 0) {
+                    angle_result_i += 360;
+    }
+    course_corr_vec.set_dir(angle_result_i);
+    course_corr_vec.set_speed(round(sqrt(x_comp_sum * x_comp_sum + y_comp_sum * y_comp_sum)));
+
 }
 
 //

@@ -81,7 +81,7 @@ int main()
     // need timestep_incr = 2 for building initial thermals
     int therm_cnt = 3;      // number of thermals to create
     int begin_step = 2;
-    bool begin_build = true;
+    bool begin_build = true;    // needed for first time loop execution
     AP_Point t_base_1(10200, 10200, 0);
     AP_Point t_base_2(10700, 10700, 0);
     AP_Point t_base_3(10500, 11700, 0);
