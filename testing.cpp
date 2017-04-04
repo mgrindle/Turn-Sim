@@ -88,3 +88,5 @@ void general_testing2(void) {
     XG_Wind wind_a;
     wind_a.prt_wind();
 }
+
+

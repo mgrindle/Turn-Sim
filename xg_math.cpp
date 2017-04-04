@@ -9,6 +9,7 @@
  */
 #include <iostream>
 #include <cmath>
+#include <random>
 #include "base.h"
 #include "wind.h"
 #include "thermal.h"
@@ -136,7 +137,7 @@ AP_Point revise_therm_center_for_wind(const AP_Point & in_point, const int times
 //    std::cout << ",  Wind Element : (" << curr_wind_element.wind_dir << ", " <<
 //                curr_wind_element.wind_s << ", " << curr_wind_element.wind_dir_recip <<
 //                ")\n";
-//    std::cout << "Calc'd pi value: " << pi() << "\n";\
+//    std::cout << "Calc'd pi value: " << pi() << "\n";
 //    int delta_x = in_point.get_x() - rev_loc.get_x();
 //    int delta_y = in_point.get_y() - rev_loc.get_y();
 //    std::cout << "Delta values - x & y: " << delta_x << ", " << delta_y << "\n";
@@ -149,3 +150,54 @@ AP_Point revise_therm_center_for_wind(const AP_Point & in_point, const int times
 
     return rev_loc;
 }
+
+//
+// Modify an Elevation (of a plane) using an Oscillating function based
+//  on the timestep. This to simulate a non-steady-state glide path.
+double elevation_osc(double timestep_dbl) {
+    int max_elev_osc = 20;          // max +/- variation in oscillation of the eleveation
+    int half_cycle_time = 157;      // time to complete 1/2 cycle of oscillation (ds)
+    return max_elev_osc * sin(pi() / half_cycle_time * timestep_dbl);
+}
+
+
+//
+// Random Number Generator Toolkit
+//
+//      The following group of functions provide a single random
+//      number generator toolkit that can be used anywhere in the
+//      application. The implementation only offers a universal
+//      distribution of integer and real numbers. Others can be added
+//      later as needed. All the functions are defined in-line here
+//      in this header file.
+//
+//      The toolkit is based on an example in a document explaining
+//      new C++11 features for random number generators.  The title
+//      is "N3551: Random Number Generators on C++11".
+
+std::mt19937 & global_urng() {      // define engine used
+    static std::mt19937 u{};
+    return u;
+}
+
+void randomize() {
+    std::random_device rd{};        // randomize seed
+    global_urng().seed(rd());       // random seed
+    //global_urng().seed(2321582);  // repeat same sequence
+}
+
+int pick_a_number(int  from, int thru) {
+    static std::uniform_int_distribution<> d{};
+    using parm_t = decltype(d)::param_type;
+    return d(global_urng(), parm_t{from, thru});
+}
+
+double pick_a_number(double  from, double upto) {
+    static std::uniform_real_distribution<> d{};
+    using parm_t = decltype(d)::param_type;
+    return d(global_urng(), parm_t{from, upto});
+}
+
+//
+// End - Random Number Generator Toolkit
+//

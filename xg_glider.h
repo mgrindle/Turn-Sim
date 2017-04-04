@@ -11,8 +11,9 @@
  ============================================================================
  */
 #include <cmath>
-#include "xg_math.h"
 #include <string>
+#include "xg_math.h"
+
 
 // Define system wide constants
 
@@ -32,8 +33,10 @@ private:
     int _vp_last_timestep;          // timestep cache last updated
     int * _vp_readings_cache;       // ptr to vario readings cache
 
-
 public:
+    XG_Vario_Press(const AP_Point g_start_loc, const double g_curr_sink_rate,
+                   const bool g_use_elev_osc, const bool g_use_noise_gen);
+    ~XG_Vario_Press();
 
 };
 
